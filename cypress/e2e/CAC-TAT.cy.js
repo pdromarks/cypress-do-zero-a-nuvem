@@ -47,7 +47,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     //o should está pegando o valor do #phone e verificando se é vazio
   })
 
-  it.only('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+  //extra 4
+  it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
     cy.get('#firstName').type('Pedro')
     cy.get('#lastName').type('Marques')
     cy.get('#email').type('pedro@gmail.com') 
@@ -59,4 +60,22 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // o .should valida a condição que está em (''), que nesse caso é se está visível
   })
 
+  //extra 5
+  it('preenche e limpa os campos nome, sobrenome, email e telefone', ()=>{
+    cy.get('#firstName').type('Pedro').should('have.value', 'Pedro').clear().should('have.value', '')
+    cy.get('#lastName').type('Marques').should('have.value', 'Marques').clear().should('have.value', '')
+    cy.get('#email').type('pedro@gmail.com').should('have.value', 'pedro@gmail.com').clear().should('have.value', '')
+    cy.get('#phone').type('00123456789').should('have.value', '00123456789').clear().should('have.value', '')
+
+    //verifica o valor quando for preenchido e após limpar com o .clear()
+
+  })
+
+  //extra 6
+  it.only('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () =>{
+    
+    cy.get('button[type="submit"]').click()
+    cy.get('.error').should('be.visible')
+  })
+  
 })
